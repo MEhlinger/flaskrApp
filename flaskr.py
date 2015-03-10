@@ -5,7 +5,7 @@
 import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, \
 	abort, render_template, flash
-from context import closing
+from contextlib import closing
 
 # Configuration
 DATABASE = '/tmp/flaskr.db'
@@ -23,9 +23,9 @@ def connect_db():
 	
 def init_db():
 	with closing(connect_db()) as db:
-		with app.open_resources('schema.sql', mode='r') as f:
+		with app.open_resource('schema.sql', mode='r') as f:
 			db.cursor().executescript(f.read())
-		db.commit())	
+		db.commit()
 
 @app.before_request
 def before_request():
